@@ -1,0 +1,9 @@
+﻿distance,size,speed,textName,name
+57910000,2440,0.24,mercury,mercury
+108200000,6052,0.62,venus,venus
+149600000,6371,1,earthmap,earth
+227900000,3400,1.88,mars,mars
+778500000,69911,11.86,jupiter,jupiter
+1433000000,58232,29.46,saturn,saturn
+2877000000,25362,84.01,neptune,neptune
+4503000000,24622,164.8,uranus,uranus
