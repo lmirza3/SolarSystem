@@ -71,9 +71,9 @@ public class Planets : MonoBehaviour
         {
 
             float planetDistance = float.Parse(planets[planetCounter, 5]) * 10.0F;
-            Debug.Log(planets[planetCounter, 5]);
-            float planetSize = float.Parse(planets[planetCounter, 6]);
-            float planetSpeed = -1.0F / float.Parse(planets[planetCounter, 4]);
+            //Debug.Log(planets[planetCounter, 5]);
+            float planetSize = float.Parse(planets[planetCounter, 9]) * 6371.0F *2.0F / 100000.0F;
+            float planetSpeed = -1.0F / float.Parse(planets[planetCounter, 4]) / 365.0F * revolutionSpeed;
             string textureName = "mercury";
             string planetName = planets[planetCounter, 1];
 
@@ -116,7 +116,7 @@ public class Planets : MonoBehaviour
         {
 
             float planetDistance = float.Parse(planets[planetCounter, 5]) * 10.0F;
-            float planetSize = float.Parse(planets[planetCounter, 6]);
+            float planetSize = float.Parse(planets[planetCounter, 9]) * 6371.0F * 2.0F / 100000.0F;
             string textureName = "mercury";
             string planetName = planets[planetCounter, 1];
 
@@ -177,8 +177,8 @@ public class Planets : MonoBehaviour
         sunTextMesh.fontSize = 150;
         sideSunText.transform.parent = thisSide.transform;
 
-        float innerHab = float.Parse(star[7]) * 9.5F / 10.0F;
-        float outerHab = float.Parse(star[7]) * 14F / 10.0F;
+        float innerHab = float.Parse(star[11]) * 9.5F;
+        float outerHab = float.Parse(star[11]) * 14F;
 
 
         // need to take panelXScale into account for the hab zone
@@ -207,12 +207,12 @@ public class Planets : MonoBehaviour
         GameObject sunSupport;
         GameObject sunText;
 
-        float sunScale = float.Parse(star[8]);
+        float sunScale = float.Parse(star[8]) * 695500F / 100000F;
         float centerSunSize = 0.25F;
 
         // set the habitable zone based on the star's luminosity
-        float innerHab = float.Parse(star[7]) * 9.5F / 10.0F;
-        float outerHab = float.Parse(star[7]) * 14F / 10.0F;
+        float innerHab = float.Parse(star[11]) * 9.5F;
+        float outerHab = float.Parse(star[11]) * 14F;
 
 
         newSun = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -319,12 +319,22 @@ public class Planets : MonoBehaviour
 
 
 
-        string[] sol = new string[5] { "695500", "Our Sun", "sol", "G2V", "1.0" };
-        //string[] sol = new string[5] { "Our Sun", "sol", "G2V", "1.0", "", "", "", "10", "1" };
+        //string[] sol = new string[5] { "695500", "Our Sun", "sol", "G2V", "1.0" };
+        string[] sol = new string[12] { "Our Sun", "", "", "8", "1", "3", "0", "70","695500","6","G2V", "1.0" };
 
 
-        string[,] solPlanets = new string[8, 5] {
-            {   "57910000",  "2440",    "0.24", "mercury", "mercury" },
+        string[,] solPlanets = new string[8, 12] {
+            {   "","mercury","","","0.0006575","0.38", "","","","0.382", "mercury",  "" },
+            {   "","venus","","","0.00169","0.72", "","","","0.949", "mercury",  "" },
+            {   "","earth","","","0.0027","1.0", "","","","1.0", "mercury",  "" },
+            {   "","mars","","","0.0051","1.52", "","","","0.533", "mercury",  "" },
+            {   "","jupiter","","","0.0324","5.20", "","","","10.97", "mercury",  "" },
+            {   "","saturn","","","0.0807","9.57", "","","","9.14", "mercury",  "" },
+            {   "","uranus","","","0.2301","19.2", "","","","3.98", "mercury",  "" },
+            {   "","neptune","","","0.4515","30.1", "","","","3.864", "mercury",  "" }
+        };
+
+        /*
             {  "108200000",  "6052",    "0.62", "venus",   "venus" },
             {  "149600000",  "6371",    "1.00", "earthmap", "earth" },
             {  "227900000",  "3400",    "1.88", "mars",     "mars" },
@@ -334,16 +344,16 @@ public class Planets : MonoBehaviour
             { "4503000000", "24622",  "164.80", "uranus", "neptune" }
         };
 
+    */
 
 
 
 
-
-        string[,] solP = new string[243, 9];
+        string[,] solP = new string[259, 12];
         int colIndex = 0;
         int rowIndex = 0;
         string aLine;
-        System.IO.StreamReader aFile = new System.IO.StreamReader(@"C:Assets/csv/smallP.csv");
+        System.IO.StreamReader aFile = new System.IO.StreamReader(@"C:Assets/csv/planets.csv");
 
         while ((aLine = aFile.ReadLine()) != null)
         {
@@ -375,20 +385,24 @@ public class Planets : MonoBehaviour
         var systemOffset = new Vector3(0, 0, 0);
         var oneOffset = new Vector3(0, -30, 0);
 
-        for (int i = 0; i < 243; i++)
+        dealWithSystem(sol, solPlanets, systemOffset, allCenter);
+        systemOffset += oneOffset;
+
+        for (int i = 0; i < 258; i++)
         {
-            string[] starH = new string[9];
+            string[] starH = new string[12];
             int amount = int.Parse(solP[i, 3]);
-            string[,] sys = new string[amount, 9];
+            string[,] sys = new string[amount, 12];
             for (int j = 0; j < amount; j++)
             {
-                for (int k = 0; k < 9; k++)
+                for (int k = 0; k < 12; k++)
                 {
                     sys[j, k] = solP[i + j, k];
                     starH[k] = solP[i, k];
 
                 }
             }
+       
             dealWithSystem(starH, sys, systemOffset, allCenter);
             systemOffset += oneOffset;
             i = i + amount;
