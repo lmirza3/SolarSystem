@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class DropDownMenuBehavior : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	public int planetScaleCounter;
+	public int orbitScaleCounter;
+	public int orbitSpeedCounter;
+
+	void OnTriggerEnter(Collider other){
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

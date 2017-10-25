@@ -26,7 +26,7 @@ public class Planets : MonoBehaviour
     float orbitXScale = 2.0F;
 
 	SteamVR_TrackedObject obj;
-	public GameObject buttonHolder;
+	public GameObject main;
 	public bool buttonEnabled;
 
 	GameObject allCenter;
@@ -689,7 +689,15 @@ public class Planets : MonoBehaviour
         allCenter.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
     }
 
-
+	public void updateOrbitScale(float value){
+		this.orbitScaleCounter = value;
+	}
+	public void updatePlanetScale(float value){
+		this.planetScaleCounter = value;
+	}
+	public void updateOrbitSpeed(float value){
+		this.speedCounter = value;
+	}
 
 
     // Update is called once per frame

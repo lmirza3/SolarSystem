@@ -12,7 +12,6 @@ public class controllermovement : MonoBehaviour
 	public GameObject buttonHolder;
 	public bool buttonEnabled;
 
-
 	SteamVR_Controller.Device device;
 	SteamVR_TrackedObject controller;
 
@@ -55,12 +54,10 @@ public class controllermovement : MonoBehaviour
 		}
 		if (device2.GetPressDown (SteamVR_Controller.ButtonMask.ApplicationMenu)) {
 			if (buttonEnabled == false) {
-//				buttonHolder.transform.localScale += Vector3 (0.1F, 0.1F, 0.1F);
-
+				
 				buttonHolder.SetActive (true);
 				buttonEnabled = true;
 			} else if (buttonEnabled == true) {
-//				buttonHolder.transform.localScale -= Vector3 (0.1F, 0.1F, 0.1F);
 				buttonHolder.SetActive (false);
 				buttonEnabled = false;
 			}
