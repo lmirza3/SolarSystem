@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Valve.VR;
 
 
 public class Planets : MonoBehaviour
@@ -24,9 +25,17 @@ public class Planets : MonoBehaviour
     float panelXScale = 2.0F;
     float orbitXScale = 2.0F;
 
+	SteamVR_TrackedObject obj;
+	public GameObject buttonHolder;
+	public bool buttonEnabled;
+
 	GameObject allCenter;
 
 	bool show3dGlobal;
+
+	float speedCounter;
+	float planetScaleCounter;
+	float orbitScaleCounter;
 
 	string[] sol = new string[5] { "695500", "Our Sun", "sol", "G2V" , "1.0"};
 
@@ -563,6 +572,7 @@ public class Planets : MonoBehaviour
         SolarSide.name = "Side View of" + starInfo[1];
 
 
+
         sideDealWithStar(starInfo, SolarSide, AllOrbits);
         sideDealWithPlanets(planetInfo, SolarSide, AllOrbits);
 
@@ -572,6 +582,13 @@ public class Planets : MonoBehaviour
     }
 
     //------------------------------------------------------------------------------------//
+
+	void Awake() {
+		obj = GetComponent<SteamVR_TrackedObject>();
+		buttonHolder.SetActive (false);
+		buttonEnabed = false;
+
+	}
 
     void Start()
     {
@@ -661,7 +678,7 @@ public class Planets : MonoBehaviour
                 }
             }
 
-			// if button clicked, enable show3d
+			// if i = n ; enable show3d
        
             dealWithSystem(starH, sys, systemOffset, allCenter, true);
             systemOffset += oneOffset;
@@ -678,13 +695,36 @@ public class Planets : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (Input.GetKeyDown (KeyCode.R)) {
-			Destroy (allCenter);
-			Start ();
+		// if reset button is clicked
+		// reset
+		var device = SteamVR_Controller.Input((int)obj.index);
+
+		if (device.GetPressDown (SteamVR_Controller.ButtonMask.ApplicationMenu)) {
+			if (buttonEnabled == false) {
+				Destroy (allCenter);
+				Start ();
+				buttonHolder.SetActive (true);
+				this.buttonEnabled = true;
+			} else if (buttonEnabled == true) {
+				buttonHolder.SetActive (false);
+				buttonEnabled = false;
+			}
 		}
 
 		// if button is clicked
-		// set show3dGlobal is true
+		// set global counter to appropriate button
+		// reset
+
+		// if orbit scale is clicked
+		// set counter to multiply by number multiply by amount
+		// reset
+
+		// if planet scale is clicked
+		// set counter to multiply by number multiply by amount
+		// reset
+
+		// if speed scale is clicked
+		// set counter to multiply by number multiply by amount
 		// reset
 
 
