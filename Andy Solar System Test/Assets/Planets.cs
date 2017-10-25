@@ -583,12 +583,12 @@ public class Planets : MonoBehaviour
 
     //------------------------------------------------------------------------------------//
 
-	void Awake() {
-		obj = GetComponent<SteamVR_TrackedObject>();
-		buttonHolder.SetActive (false);
-		buttonEnabed = false;
-
-	}
+//	void Awake() {
+//		obj = GetComponent<SteamVR_TrackedObject>();
+//		buttonHolder.SetActive(false);
+//		buttonEnabled = false;
+//
+//	}
 
     void Start()
     {
@@ -697,19 +697,19 @@ public class Planets : MonoBehaviour
     {
 		// if reset button is clicked
 		// reset
-		var device = SteamVR_Controller.Input((int)obj.index);
-
-		if (device.GetPressDown (SteamVR_Controller.ButtonMask.ApplicationMenu)) {
-			if (buttonEnabled == false) {
-				Destroy (allCenter);
-				Start ();
-				buttonHolder.SetActive (true);
-				this.buttonEnabled = true;
-			} else if (buttonEnabled == true) {
-				buttonHolder.SetActive (false);
-				buttonEnabled = false;
-			}
-		}
+//		var device = SteamVR_Controller.Input((int)obj.index);
+//
+//		if (device.GetPressDown (SteamVR_Controller.ButtonMask.ApplicationMenu)) {
+//			if (buttonEnabled == false) {
+//				Destroy (allCenter);
+//				Start ();
+//				buttonHolder.SetActive (true);
+//				this.buttonEnabled = true;
+//			} else if (buttonEnabled == true) {
+//				buttonHolder.SetActive (false);
+//				buttonEnabled = false;
+//			}
+//		}
 
 		// if button is clicked
 		// set global counter to appropriate button

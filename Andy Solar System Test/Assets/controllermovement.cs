@@ -9,6 +9,9 @@ using Valve.VR;
 public class controllermovement : MonoBehaviour
 {
 	public GameObject player;
+	public GameObject buttonHolder;
+	public bool buttonEnabled;
+
 
 	SteamVR_Controller.Device device;
 	SteamVR_TrackedObject controller;
@@ -28,6 +31,7 @@ public class controllermovement : MonoBehaviour
 	void Update()
 	{
 		device = SteamVR_Controller.Input((int)controller.index);
+		var device2 = SteamVR_Controller.Input ((int)controller.index);
 		//If finger is on touchpad
 		if (device.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
 		{
@@ -49,5 +53,19 @@ public class controllermovement : MonoBehaviour
 
 			Debug.Log ("Touchpad X = " + touchpad.x + " : Touchpad Y = " + touchpad.y);
 		}
+		if (device2.GetPressDown (SteamVR_Controller.ButtonMask.ApplicationMenu)) {
+			if (buttonEnabled == false) {
+//				buttonHolder.transform.localScale += Vector3 (0.1F, 0.1F, 0.1F);
+
+				buttonHolder.SetActive (true);
+				buttonEnabled = true;
+			} else if (buttonEnabled == true) {
+//				buttonHolder.transform.localScale -= Vector3 (0.1F, 0.1F, 0.1F);
+				buttonHolder.SetActive (false);
+				buttonEnabled = false;
+			}
+		}
+
+
 	}
 }
