@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/solar ststem test for fall 17 class.unity
-  isLoaded: 1
-  isActive: 1
