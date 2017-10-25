@@ -252,7 +252,7 @@ public class Planets : MonoBehaviour
 
 		for (planetCounter = 0; planetCounter < planets.GetLength(0); planetCounter++) {
 
-			float planetDistance = float.Parse (planets [planetCounter, 0]) / 149600000.0F * 10.0F;
+			float planetDistance = float.Parse (planets [planetCounter, 0]) /149600000.0F * 10.0F;
 			float planetSize = float.Parse (planets [planetCounter, 1]) * 1.0F / 10000.0F;
 			string textureName = planets [planetCounter, 3];
 			string planetName = planets [planetCounter, 4];
@@ -337,10 +337,10 @@ public class Planets : MonoBehaviour
         for (planetCounter = 0; planetCounter < planets.GetLength(0); planetCounter++)
         {
 
-			float planetDistance = float.Parse(planets[planetCounter, 5]) * 5.0F;
+			float planetDistance = float.Parse(planets[planetCounter, 5]) * 10.0F;
             //Debug.Log(planets[planetCounter, 5]);
             float planetSize = float.Parse(planets[planetCounter, 9]) * 6371.0F *2.0F / 100000.0F;
-            float planetSpeed = -1.0F / float.Parse(planets[planetCounter, 4]) / 365.0F * revolutionSpeed;
+            float planetSpeed = -1.0F / float.Parse(planets[planetCounter, 4]) * revolutionSpeed;
             string textureName = "mercury";
             string planetName = planets[planetCounter, 1];
 
@@ -382,7 +382,7 @@ public class Planets : MonoBehaviour
         for (planetCounter = 0; planetCounter < planets.GetLength(0); planetCounter++)
         {
 
-            float planetDistance = float.Parse(planets[planetCounter, 5]) * 10.0F;
+            float planetDistance = float.Parse(planets[planetCounter, 5]) * 10.0F ;
             float planetSize = float.Parse(planets[planetCounter, 9]) * 6371.0F * 2.0F / 100000.0F;
             string textureName = "mercury";
             string planetName = planets[planetCounter, 1];
@@ -474,7 +474,7 @@ public class Planets : MonoBehaviour
         GameObject sunSupport;
         GameObject sunText;
 
-        float sunScale = float.Parse(star[8]) * 695500F / 100000F;
+        float sunScale = float.Parse(star[8]) * 695500.0F / 100000.0F;
         float centerSunSize = 0.25F;
 
         // set the habitable zone based on the star's luminosity
@@ -547,9 +547,9 @@ public class Planets : MonoBehaviour
         SunStuff = new GameObject();
         Planets = new GameObject();
 
-        SolarCenter.name = "SolarCenter" + " " + starInfo[1];
-        AllOrbits.name = "All Orbits" + " " + starInfo[1];
-        SunStuff.name = "Sun Stuff" + " " + starInfo[1];
+        SolarCenter.name = "SolarCenter" + " " + starInfo[0];
+        AllOrbits.name = "All Orbits" + " " + starInfo[0];
+        SunStuff.name = "Sun Stuff" + " " + starInfo[0];
         Planets.name = "Planets" + " " + starInfo[1];
 
 		if (show3d == true) {
@@ -569,7 +569,7 @@ public class Planets : MonoBehaviour
         // add in second 'flat' representation
         GameObject SolarSide;
         SolarSide = new GameObject();
-        SolarSide.name = "Side View of" + starInfo[1];
+        SolarSide.name = "Side View of" + starInfo[0];
 
 
 
@@ -665,7 +665,34 @@ public class Planets : MonoBehaviour
 
 		for (int i = 0; i < 258; i++)
         {
-            string[] starH = new string[12];
+            int c = 1;
+            if ( solP[i,0] == solP[i+1, 0])
+            {
+                c++;
+            }
+
+            
+            else
+            {
+                string[] starH = new string[12];
+                string[,] s = new string[c, 12];
+
+                for (int j = 0; j < c; j++)
+                {
+                    for (int k = 0; k < 12; k++)
+                    {
+                        s[j, k] = solP[i + 1 - c + j, k];
+                        starH[k] = solP[i, k];
+
+                    }
+                }
+
+                dealWithSystem(starH, s, systemOffset, allCenter, true);
+                systemOffset += oneOffset;
+
+            }
+            /*string[] starH = new string[12];
+
             int amount = int.Parse(solP[i, 3]);
             string[,] sys = new string[amount, 12];
             for (int j = 0; j < amount; j++)
@@ -676,13 +703,12 @@ public class Planets : MonoBehaviour
                     starH[k] = solP[i, k];
 
                 }
-            }
+            }*/
 
 			// if i = n ; enable show3d
        
-            dealWithSystem(starH, sys, systemOffset, allCenter, true);
-            systemOffset += oneOffset;
-            i = i + amount;
+            
+            //i = i + amount;
         }
 			
 
